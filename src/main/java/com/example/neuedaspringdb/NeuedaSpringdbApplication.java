@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class NeuedaSpringdbApplication {
@@ -21,9 +22,28 @@ public class NeuedaSpringdbApplication {
 		System.out.println("App is started...");
 		MusicService musicService = context.getBean(MusicService.class);
 		List<String> artist = new ArrayList<String>();
-		artist.add("Gordon");
-		musicService.addMusicData(new Music("1", "test1", artist, "metal"));
-		musicService.getMusicByName("test");
-	}
+		Scanner sc = new Scanner(System.in);
 
+		System.out.println("Enter option: (1) Insert (2) View (Other) Exit");
+		int op = sc.nextInt();
+		String id, name, genre;
+		switch (op) {
+			case 1:
+				System.out.println("Enter the following: ID, Name, Artist, Genre");
+				id = sc.next();
+				name = sc.next();
+				artist.add(sc.next());
+				genre = sc.next();
+				musicService.addMusicData(new Music(id, name, artist, genre));
+				System.out.println("Added!");
+				break;
+			case 2:
+				musicService.getAllMusicData();
+				break;
+			default:
+				System.out.println("Exiting...");
+				break;
+		}
+		artist.clear();
+	}
 }
